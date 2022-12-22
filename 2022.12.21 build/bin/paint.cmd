@@ -97,13 +97,31 @@ if "!col!"=="84" set cC=!lMagenta!
 if "!col!"=="85" set cC=!lMagenta!)))))
 goto dL
 :sP
-if not "!pS!"=="2" (if "!pPC!"=="0" (for /l %%x in (1, 1, %mP%) do (if "!pPC!"=="0" (if not exist "%rD%\home\%username%\paintProjects\project_%%x" set pPC=%%x)))
-if !pPC! leq %mP% (if not "!pPC!"=="0" (title Max's Batch paint tool - File #%pPC% (Saving...)
-echo. > "%rD%\home\%username%\paintProjects\project_!pPC!"
-set lSL=
-for /F "usebackq tokens=*" %%x in ("%rD%\tmp\paintTmp") do (if not "%%x"=="!lSL!" echo %%x>> "%rD%\home\%username%\paintProjects\project_!pPC!"
-set "lSL=%%x")
-set pS=1) else (set pS=3)) else (set pS=3))
+	if not "!pS!" == "2" (
+		if "!pPC!" == "0" (
+			for /l %%x in (1, 1, %mP%) do (
+				if "!pPC!" == "0" (
+					if not exist "%rD%\home\%username%\paintProjects\project_%%x" set pPC=%%x
+				)
+			)
+		)
+		if !pPC! leq %mP% (
+			if not "!pPC!" == "0" (
+				title Max's Batch paint tool - File #%pPC% (Saving...)
+				echo. > "%rD%\home\%username%\paintProjects\project_!pPC!"
+				set lSL=
+				for /F "usebackq tokens=*" %%x in ("%rD%\tmp\paintTmp") do (
+					if not "%%x" == "!lSL!" echo %%x>> "%rD%\home\%username%\paintProjects\project_!pPC!"
+					set "lSL=%%x"
+				)
+				set pS=1
+			) else (
+				set pS=3
+			)
+		) else (
+			set pS=3
+		)
+	)
 exit /b
 :lP
 for /l %%x in (1, 1, %mP%) do (if exist "%rD%\home\%username%\paintProjects\project_%%x" set pPH=%%x)
